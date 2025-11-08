@@ -1,0 +1,186 @@
+# birthday--quest
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LET'S MAKE UR BDY WISH A LIL DRAMATIC JUST AS U😽</title>
+<style>
+  :root{--bg:url('https://i.postimg.cc/1tc4Sh3v/In-Shot-20251106-204637839.jpg');--accent:#ff66b3}
+  *{box-sizing:border-box}
+  body,html{height:100%;margin:0;font-family:"Comic Sans MS",cursive,system-ui}
+  body{
+    background-image: var(--bg);
+    background-size:cover;
+    background-position:center;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .panel{width:92%;max-width:720px;background:rgba(255,255,255,0.92);border-radius:14px;padding:22px;box-shadow:0 14px 40px rgba(0,0,0,0.25);transform-origin:center;transition:transform .6s ease,opacity .5s}
+  h1{margin:4px 0 10px;font-size:1.5rem;text-align:center}
+  p.lead{text-align:center;color:#333;margin:8px 0 18px}
+  .spotify {display:flex;justify-content:center;margin-bottom:12px}
+  .quiz-area{text-align:center;padding:6px}
+  .title-step{font-weight:700;margin-bottom:8px}
+  .question{font-size:1.15rem;margin:16px 0}
+  .opts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .opt{padding:12px 18px;border-radius:12px;border:2px solid var(--accent);background:white;cursor:pointer;font-weight:700}
+  .floating {position:absolute;transition:all .25s ease}
+  .progress{margin-top:14px;text-align:center;color:#444}
+  .start-btn{display:block;margin:14px auto;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:800;cursor:pointer}
+  .hint{display:block;margin:10px auto;font-size:.9rem;color:#555;text-align:center}
+  .slide-out{transform:translateX(-30px);opacity:0}
+  /* when wrong option moves: */
+  .shake {animation:shake .35s}
+  @keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}100%{transform:translateX(0)}}
+  footer{font-size:.85rem;color:#222;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+  <div class="panel" id="panel">
+    <h1>LET'S MAKE UR BDY WISH A LIL DRAMATIC JUST AS U😽</h1>
+    <div class="spotify">
+      <!-- Spotify embed (user asked same track) -->
+      <iframe id="spotify" src="https://open.spotify.com/embed/track/3W4UJM65swZgLifMu7DxPf" width="300" height="80" frameborder="0" allow="encrypted-media" style="border-radius:8px"></iframe>
+    </div>
+
+    <p class="lead">Answer carefully — two options <strong>ME</strong> and <strong>Bauna bbg🎀</strong>. Wrong answers will run away 😉</p>
+
+    <div id="quizArea" class="quiz-area">
+      <div class="title-step">The quiz starts now</div>
+      <div id="qtext" class="question">Click Start to begin</div>
+
+      <div class="opts" id="opts">
+        <!-- buttons inserted by JS -->
+      </div>
+
+      <div class="progress" id="progress"></div>
+      <button id="startBtn" class="start-btn">Start Quiz</button>
+      <div class="hint">If Spotify doesn't autoplay, press Play inside the Spotify box.</div>
+    </div>
+
+    <footer>Score unlocks the surprise. Good luck ✨</footer>
+  </div>
+
+<script>
+/* Quiz logic per spec */
+const questions = [
+  { q:"Who is the BBG? 🎀", correct:"Bauna bbg🎀", textIfCorrect:"That's like my bbg🎀", textIfWrong:"THINKKK AGAINN" },
+  { q:"Who is the SMARTER ONE?😼", correct:"Me", textIfCorrect:"Good realisation", textIfWrong:"come on be honest mr manocha🤷🏻‍♀️" },
+  { q:"Who's more dramatic? 😼", correct:"Me", textIfCorrect:"It's ur problem to handle this🤷🏻‍♀️", textIfWrong:"Good realisation" },
+  { q:"Who's more stubborn? 😽", correct:"Bauna bbg🎀", textIfCorrect:"HAPPIEEE HAPPIEEE happieeee🐶", textIfWrong:"wWHATTTT HOWWWW!!!??🫥" },
+  { q:"Who did the most tagda wala kalesh!!?? 😼", correct:"Bauna bbg🎀", specialPrompt:true, promptText:"Answer carefully it can lead to a new kalesh☺️", textIfCorrect:"🥹Koii baat nhii🫂", textIfWrong:"😾" }
+];
+
+let idx = 0;
+const optsEl = document.getElementById('opts');
+const qtext = document.getElementById('qtext');
+const progress = document.getElementById('progress');
+const startBtn = document.getElementById('startBtn');
+const panel = document.getElementById('panel');
+
+function showQuestion(i){
+  const it = questions[i];
+  qtext.textContent = it.specialPrompt ? it.q + " — " + it.promptText : it.q;
+  progress.textContent = `Question ${i+1} of ${questions.length}`;
+  optsEl.innerHTML = '';
+  // two options: ME and Bauna bbg🎀
+  createOption('Me');
+  createOption('Bauna bbg🎀');
+}
+
+function randPos(el){
+  // place button randomly within viewport constraints
+  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  const x = Math.random()*(vw-140);
+  const y = Math.random()*(vh-220);
+  el.style.position='fixed';
+  el.style.left = x+'px';
+  el.style.top = y+'px';
+  el.classList.add('floating');
+  setTimeout(()=>el.classList.remove('floating'),350);
+}
+
+function createOption(label){
+  const b = document.createElement('button');
+  b.className='opt';
+  b.textContent = label;
+  b.onclick = ()=>select(label,b);
+  optsEl.appendChild(b);
+}
+
+function select(label,btn){
+  const it = questions[idx];
+  const correct = it.correct;
+  if(label === correct){
+    showFeedback(it.textIfCorrect || "Good");
+    // cleanup any floating buttons repositioned
+    resetFloating();
+    idx++;
+    if(idx < questions.length){
+      setTimeout(()=>{ showQuestion(idx); },700);
+    } else {
+      setTimeout(finishQuiz,700);
+    }
+  } else {
+    // wrong: move that button around randomly on screen
+    btn.classList.add('shake');
+    setTimeout(()=>btn.classList.remove('shake'),350);
+    randPos(btn);
+    showFeedback(it.textIfWrong || "Oops");
+  }
+}
+
+function resetFloating(){
+  // remove fixed positioned floating buttons and recreate opts fresh
+  const floats = Array.from(document.querySelectorAll('.opt'));
+  floats.forEach(el=>{
+    el.style.position='';
+    el.style.left='';
+    el.style.top='';
+  });
+}
+
+function showFeedback(text){
+  const fb = document.createElement('div');
+  fb.style.position='fixed';
+  fb.style.left='50%';
+  fb.style.top='20%';
+  fb.style.transform='translateX(-50%)';
+  fb.style.background='rgba(0,0,0,0.75)';
+  fb.style.color='#fff';
+  fb.style.padding='10px 18px';
+  fb.style.borderRadius='12px';
+  fb.style.fontWeight='700';
+  fb.style.zIndex=9999;
+  fb.textContent = text;
+  document.body.appendChild(fb);
+  setTimeout(()=>fb.style.opacity='0',900);
+  setTimeout(()=>fb.remove(),1400);
+}
+
+function finishQuiz(){
+  // slide effect and navigate to cake page
+  panel.classList.add('slide-out');
+  setTimeout(()=> location.href = 'cake.html', 600);
+}
+
+// start
+startBtn.addEventListener('click', ()=> {
+  idx = 0;
+  showQuestion(idx);
+  startBtn.style.display='none';
+});
+
+// keyboard shortcuts 1/2 to answer
+document.addEventListener('keydown',(e)=>{
+  if(e.key === '1' || e.key === '2'){
+    const btns = document.querySelectorAll('#opts .opt');
+    const n = (e.key === '1')?0:1;
+    if(btns[n]) btns[n].click();
+  }
+});
+</script>
+</body>
+</html>
