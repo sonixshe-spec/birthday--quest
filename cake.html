@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cake - Glow, Light & Cut</title>
+<style>
+  :root{--bg:url('https://i.postimg.cc/1tc4Sh3v/In-Shot-20251106-204637839.jpg');--accent:#ff66b3}
+  *{box-sizing:border-box}
+  body,html{height:100%;margin:0;font-family:"Comic Sans MS",cursive,system-ui}
+  body{background-image:var(--bg);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center}
+  .wrap{width:92%;max-width:820px;background:rgba(255,255,255,0.94);padding:22px;border-radius:14px;box-shadow:0 18px 48px rgba(0,0,0,.3);text-align:center}
+  h1{margin:4px 0 10px}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:800;cursor:pointer}
+  .btn.ghost{background:#888}
+  .stage{margin-top:18px;position:relative;height:260px}
+  .cake{width:220px;height:160px;margin:0 auto;position:relative}
+  .cake .layer{position:absolute;left:50%;transform:translateX(-50%);border-radius:12px}
+  .cake .bottom{bottom:0;width:220px;height:70px;background:#ff9db8}
+  .cake .mid{bottom:60px;width:170px;height:50px;background:#ffdbea}
+  .cake .top{bottom:110px;width:110px;height:46px;background:#fff6fb;border-radius:40px 40px 10px 10px}
+  .candle{position:absolute;left:50%;transform:translateX(-50%);bottom:150px;width:12px;height:56px;background:linear-gradient(45deg,#fff,#ffb3d9);border-radius:3px;opacity:.4}
+  .flame{position:absolute;left:50%;transform:translateX(-50%);bottom:202px;width:20px;height:24px;border-radius:50% 50% 30% 30%;background:radial-gradient(circle at 30% 30%,#fff0,#ffd42a 30%, #ff8a00 60%);opacity:0}
+  .lights{height:6px;margin-bottom:10px;display:flex;gap:6px;justify-content:center}
+  .light-bulb{width:18px;height:18px;border-radius:50%;background:#333;box-shadow:0 6px 12px rgba(0,0,0,.2)}
+  .lights.on .light-bulb{background:linear-gradient(45deg,#fff,#fddc6c);box-shadow:0 8px 22px rgba(255,200,50,.5)}
+  .cut-btn{display:none;margin-top:12px}
+  .confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none}
+  .note{margin-top:10px;color:#333}
+  footer{margin-top:12px;font-size:.95rem;color:#222}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🎉 Cake Time — Glow the lights, light the candle, cut the cake</h1>
+
+    <div class="spotify" style="display:flex;justify-content:center;margin-bottom:10px">
+      <iframe src="https://open.spotify.com/embed/track/3W4UJM65swZgLifMu7DxPf" width="300" height="80" frameborder="0" allow="encrypted-media" style="border-radius:8px"></iframe>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="glowBtn">Glow Lights</button>
+      <button class="btn ghost" id="lightBtn">Light Candle</button>
+      <button class="btn ghost" id="cutBtn">Cut Cake</button>
+    </div>
+
+    <div class="stage">
+      <div class="lights" id="lights">
+        <div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div>
+        <div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div>
+      </div>
+
+      <div class="cake" aria-hidden="true">
+        <div class="layer bottom"></div>
+        <div class="layer mid"></div>
+        <div class="layer top"></div>
+        <div class="candle" id="candle"></div>
+        <div class="flame" id="flame"></div>
+      </div>
+    </div>
+
+    <div class="note" id="note">Follow the steps above. After you cut the cake, click Continue to open the wish card.</div>
+
+    <div style="margin-top:12px">
+      <button class="btn" id="continueBtn" style="display:none">Continue to Wish Card</button>
+    </div>
+
+    <footer>Tip: If music doesn't start automatically, press Play in the Spotify box.</footer>
+  </div>
+
+<script>
+  const glowBtn = document.getElementById('glowBtn');
+  const lightBtn = document.getElementById('lightBtn');
+  const cutBtn = document.getElementById('cutBtn');
+  const lights = document.getElementById('lights');
+  const candle = document.getElementById('candle');
+  const flame = document.getElementById('flame');
+  const continueBtn = document.getElementById('continueBtn');
+  const note = document.getElementById('note');
+
+  let lightsOn=false, candleLit=false, cakeCut=false;
+
+  glowBtn.addEventListener('click', ()=>{
+    lights.classList.add('on');
+    lightsOn=true;
+    lightBtn.classList.remove('ghost');
+    glowBtn.classList.add('ghost');
+    note.textContent = "Lights are glowing! Now light the candle.";
+  });
+
+  lightBtn.addEventListener('click', ()=>{
+    if(!lightsOn){ alert('Please glow the lights first 🙂'); return; }
+    flame.style.opacity = 1;
+    candle.style.opacity = 1;
+    candleLit = true;
+    lightBtn.classList.add('ghost');
+    cutBtn.classList.remove('ghost');
+    note.textContent = "Candle lit! Now cut the cake.";
+  });
+
+  cutBtn.addEventListener('click', ()=>{
+    if(!candleLit){ alert('Light the candle first 🙂'); return; }
+    // simple cut animation: shrink cake then reveal confetti
+    const cake = document.querySelector('.cake');
+    cake.style.transition='transform .9s ease,opacity .8s';
+    cake.style.transform='translateY(30px) scale(.9)';
+    cake.style.opacity='0.12';
+    cakeCut=true;
+    continueBtn.style.display='inline-block';
+    note.textContent = "Cake cut! Click Continue to open the wish card.";
+    // quick confetti simulation (small colored dots)
+    burstConfetti();
+  });
+
+  continueBtn.addEventListener('click', ()=> {
+    // slide out then navigate
+    document.querySelector('.wrap').style.transform='translateX(-30px)';
+    setTimeout(()=> location.href = 'card.html', 450);
+  });
+
+  function burstConfetti(){
+    // simple colourful dots that fade
+    for(let i=0;i<30;i++){
+      const d=document.createElement('div');
+      d.style.position='fixed';
+      d.style.left=(30+Math.random()*60)+'%';
+      d.style.top=(30+Math.random()*40)+'%';
+      d.style.width='10px';
+      d.style.height='10px';
+      d.style.borderRadius='50%';
+      d.style.background=['#ff66b3','#ffd166','#9ad3bc','#9bb7ff'][Math.floor(Math.random()*4)];
+      d.style.opacity='0.95';
+      d.style.transform=`translateY(${ -Math.random()*200 - 80 }px) rotate(${Math.random()*360}deg)`;
+      d.style.transition='opacity 1s ease, transform 1s ease';
+      document.body.appendChild(d);
+      setTimeout(()=>{ d.style.opacity='0'; },900);
+      setTimeout(()=>{ d.remove(); },1700);
+    }
+  }
+</script>
+</body>
+</html>￼Enter
