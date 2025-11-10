@@ -21,7 +21,6 @@ body {
   width: 320px;
   height: 440px;
   perspective: 1000px;
-  margin: 20px;
 }
 
 .front, .back {
@@ -105,23 +104,40 @@ body {
   pointer-events: none;
   opacity: 0;
 }
+
+.next-btn {
+  margin-top: 20px;
+  padding: 10px 18px;
+  background:#9612eb;
+  color:white;
+  font-weight:700;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
 </style>
 </head>
 <body>
 
-<div class="card" id="card">
-  <div class="front">
-    <img src="https://1.bp.blogspot.com/-Mgj9-rbs65E/XfMoPSD5gtI/AAAAAAAAURk/NBokE2gSS2cTSJ2em5lZ5hJDuTtRN7UVwCLcBGAsYHQ/s1600/2713997.png" alt="cover">
-    <p style="color:#fff; margin-top:12px; font-weight:bold;">Hover to Open 🎁</p>
-  </div>
-  <div class="back">
-    <div id="head">Happy Birthday babygirl🎀♥️!</div>
-    <div class="msg">
-      <p>Happy Birthday Mr. Manocha 🎂❤️</p>
-      <p>From our nok-jhok sarcasm & me calling u bbg to those calm supportive moments when you were by my side — it’s been nothing less than a rollercoaster with u. Even in the silences, the breaks, the ghosting phases, somehow I always managed to pick up from where we left.</p>
-      <p>You’ve teased me, made me laugh, irritated me, and at the same time stood as a quiet support when I needed it. Our journey may not be perfect, but it’s ours — unique, unpredictable, and unforgettable in its own way. Today I just wish u happiness that stays, dreams that come true and moments that bring u peace. Keep being the bbg Mr. Manocha. ✨</p>
-      <p style="font-family:monospace; color:#666; margin-top:12px;"> @sonixspecworkspace .</p>
+<div>
+  <div class="card" id="card">
+    <div class="front">
+      <img src="https://1.bp.blogspot.com/-Mgj9-rbs65E/XfMoPSD5gtI/AAAAAAAAURk/NBokE2gSS2cTSJ2em5lZ5hJDuTtRN7UVwCLcBGAsYHQ/s1600/2713997.png" alt="cover">
+      <p style="color:#fff; margin-top:12px; font-weight:bold;">Hover to Open 🎁</p>
     </div>
+    <div class="back">
+      <div id="head">Happy Birthday babygirl🎀♥️!</div>
+      <div class="msg">
+        <p>Happy Birthday Mr. Manocha 🎂❤️</p>
+        <p>From our nok-jhok sarcasm & me calling u bbg to those calm supportive moments when you were by my side — it’s been nothing less than a rollercoaster with u. Even in the silences, the breaks, the ghosting phases, somehow I always managed to pick up from where we left.</p>
+        <p>You’ve teased me, made me laugh, irritated me, and at the same time stood as a quiet support when I needed it. Our journey may not be perfect, but it’s ours — unique, unpredictable, and unforgettable in its own way. Today I just wish u happiness that stays, dreams that come true and moments that bring u peace. Keep being the bbg Mr. Manocha. ✨</p>
+        <p style="font-family:monospace; color:#666; margin-top:12px;">Crafted in Code. Forged in Logic. Delivered by Sonix.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="next-btn" id="nextBtn">Next →</button>
   </div>
 </div>
 
@@ -153,6 +169,11 @@ function animateConfetti(el){
     if(top>110){ el.remove(); clearInterval(fall); }
   },16);
 }
+
+// Next button
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  window.location.href = 'afraid.html';
+});
 </script>
 
 </body>
