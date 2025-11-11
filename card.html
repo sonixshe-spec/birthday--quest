@@ -1,198 +1,192 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Card</title>
+<title>HAPPIEEE BIRTHDAY BABYGIRL 🎀</title>
 <style>
-body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: url('https://i.postimg.cc/1tc4Sh3v/In-Shot-20251106-204637839.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    background: url('https://i.postimg.cc/1tc4Sh3v/In-Shot-20251106-204637839.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+  }
 
-.card {
-  position: relative;
-  width: 320px;
-  height: 440px;
-  perspective: 1000px;
-}
+  .card {
+    width: 330px;
+    height: 420px;
+    perspective: 1000px;
+    position: relative;
+  }
 
-.front, .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  border: 8px solid #9612eb;
-  backface-visibility: hidden;
-  overflow: hidden;
-  transition: transform 1s;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
+  .front, .back {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 1s;
+  }
 
-.front {
-  background: #9612eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+  .front {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ff61d8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
 
-.front img {
-  width: 85%;
-  border-radius: 10px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-  transition: transform 0.5s ease;
-}
+  .front img {
+    width: 220px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
 
-.front img:hover {
-  transform: scale(1.05) rotate(1deg);
-}
+  .front p {
+    color: #fff;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
 
-.back {
-  transform: rotateY(180deg);
-  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-  padding: 18px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  .back {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ff61d8;
+    padding: 20px;
+    transform: rotateY(180deg);
+    overflow-y: auto;
+  }
 
-.card:hover .front {
-  transform: rotateY(-180deg);
-}
+  #head {
+    font-size: 1.4em;
+    color: #ff61d8;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
 
-.card:hover .back {
-  transform: rotateY(0deg);
-}
+  .msg p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: #fff;
+  }
 
-#head {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
+  .card:hover .front {
+    transform: rotateY(180deg);
+  }
 
-.msg {
-  font-style: italic;
-  line-height: 1.4;
-  color: #331717;
-  max-height: 240px;
-  overflow-y: auto;
-  padding-right: 6px;
-}
+  .card:hover .back {
+    transform: rotateY(360deg);
+  }
 
-.msg::-webkit-scrollbar {
-  width: 6px;
-}
+  .next-btn {
+    background: #ff61d8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 97, 216, 0.6);
+    transition: 0.3s;
+    position: relative;
+    top: 40px; /* 🔸Button ab clearly visible hoga */
+  }
 
-.msg::-webkit-scrollbar-thumb {
-  background-color: #9612eb;
-  border-radius: 3px;
-}
+  .next-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
+  }
 
-.confetti-piece {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.next-btn {
-  margin-top: 20px;
-  padding: 10px 18px;
-  background:#9612eb;
-  color:white;
-  font-weight:700;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
+  .confetti-piece {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    z-index: 9999;
+    opacity: 1;
+  }
 </style>
 </head>
 <body>
 
-<div>
-  <div class="card" id="card">
-    <div class="front">
-      <img src="https://1.bp.blogspot.com/-Mgj9-rbs65E/XfMoPSD5gtI/AAAAAAAAURk/NBokE2gSS2cTSJ2em5lZ5hJDuTtRN7UVwCLcBGAsYHQ/s1600/2713997.png" alt="cover">
-      <p style="color:#fff; margin-top:12px; font-weight:bold;">Hover to Open 🎁</p>
-    </div>
-    <div class="back">
-      <div id="head">Happy Birthday babygirl🎀♥️!</div>
-      <div class="msg">
-        <p>Happy Birthday Mr. Manocha 🎂❤️</p>
-        <p>From our endless sarcastic nok-jhok and teasing moments  it’s been one unforgettable memory... You’ve been the person who could make me laugh even in the middle of chaos, the one who could turn even the dullest day into something lighter just by being you..(by the og stupid jokes too😭)
-I still remember the silly fights, the dramatic replies, the calm pauses, and how we somehow always found our way back to conversations that made everything feel normal again. There was always this strange balance b/w ur madness and my drama..
-
-You’ve been my bbg, my constant tease, and the person who unknowingly became a part of my best memories. 
-So today, on ur birthday, I just wish u all the peace u give to others, all the laughter u spread, and all the happiness,love u deserve. Keep smiling that chaotic, pure smile of urs, and keep being the same “Bauna bbg” who never fails to make things brighter in his own weird ways.
-With love,
-~Sonal</p>
-        
-      </div>
-    </div>
+<div class="card" id="card">
+  <div class="front">
+    <img src="https://i.postimg.cc/Qd9PdmVx/birthdaygift.jpg" alt="Card Front">
+    <p>Hover to Open 🎁</p>
   </div>
 
-  <div style="text-align:center;">
-    <button class="next-btn" id="nextBtn">Next →</button>
-   .next-btn {
-  background: #ff61d8;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 25px;
-  font-size: 1em;
-  margin-top: 50px; /* 🔸 yahan pe zyada space diya */
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 97, 216, 0.6);
-  transition: 0.3s;
-  position: relative;
-  top: 30px; /*
+  <div class="back">
+    <div id="head">Happy Birthday babygirl🎀❤️</div>
+    <div class="msg">
+      <p>Happy Birthday Mr. Manocha 🎂💞🤍</p>
+      <p>
+        From our endless sarcastic nok-jhok and teasing moments it’s been one unforgettable memory...
+        You’ve been the person who could make me laugh even in the middle of chaos, the one who could turn even
+        the dullest day into something lighter just by being you.. (by the OG stupid jokes too😭)
+      </p>
+      <p>
+        I still remember the silly fights, the dramatic replies, the calm pauses, and how we somehow always found our
+        way back to conversations that made everything feel normal again. There was always this strange balance
+        b/w ur madness and my drama..
+      </p>
+      <p>
+        You’ve been my bbg, my constant tease, and the person who unknowingly became a part of my best memories.
+        So today, on ur birthday, I just wish u all the peace u give to others, all the laughter u spread, and all the
+        happiness, love u deserve. Keep smiling that chaotic, pure smile of urs, and keep being the same “Bauna bbg”
+        who never fails to make things brighter in his own weird ways.
+      </p>
+      <p>With love,<br>~Sonal 💖</p>
+    </div>
   </div>
 </div>
 
+<div style="text-align:center;">
+  <button class="next-btn" id="nextBtn">Next →</button>
+</div>
+
 <script>
-// Confetti on hover
-const card = document.getElementById('card');
-card.addEventListener('mouseenter', spawnConfetti);
+  // 🎉 Confetti effect on hover
+  const card = document.getElementById('card');
+  card.addEventListener('mouseenter', spawnConfetti);
 
-function spawnConfetti(){
-  for(let i=0;i<25;i++){
-    const c = document.createElement('div');
-    c.className='confetti-piece';
-    c.style.background=['#ff66b3','#ffd166','#9ad3bc','#9bb7ff'][Math.floor(Math.random()*4)];
-    c.style.left=(Math.random()*80+10)+'%';
-    c.style.top='0%';
-    c.style.opacity=1;
-    document.body.appendChild(c);
-    animateConfetti(c);
+  function spawnConfetti() {
+    for (let i = 0; i < 25; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.background = ['#ff66b3','#ffd166','#9ad3bc','#9bb7ff'][Math.floor(Math.random()*4)];
+      c.style.left = (Math.random() * 100) + "%";
+      c.style.top = "-10px";
+      document.body.appendChild(c);
+      animateConfetti(c);
+    }
   }
-}
 
-function animateConfetti(el){
-  let top = 0;
-  const fall = setInterval(()=>{
-    top += Math.random()*6 +2;
-    el.style.top=top+'%';
-    el.style.transform=`rotate(${Math.random()*360}deg)`;
-    el.style.opacity -= 0.02;
-    if(top>110){ el.remove(); clearInterval(fall); }
-  },16);
-}
+  function animateConfetti(el) {
+    let top = -10;
+    const fall = setInterval(() => {
+      top += Math.random() * 5 + 2;
+      el.style.top = top + "px";
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      el.style.opacity -= 0.02;
+      if (top > window.innerHeight) {
+        el.remove();
+        clearInterval(fall);
+      }
+    }, 16);
+  }
 
-// Next button
-document.getElementById('nextBtn').addEventListener('click', ()=>{
-  window.location.href = 'afraid.html';
-});
+  // 🎀 Next button → redirect to afraid.html
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    window.location.href = 'afraid.html';
+  });
 </script>
-
 </body>
 </html>
